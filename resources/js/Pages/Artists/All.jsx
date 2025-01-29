@@ -2,9 +2,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 export default function All({auth, artists}){
     return( 
-        <AuthenticatedLayout>
+        <Layout>
 
             <h1>all artists</h1>
-        </AuthenticatedLayout>
+        </Layout>
     )
 }

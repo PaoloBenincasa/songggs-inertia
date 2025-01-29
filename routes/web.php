@@ -24,14 +24,14 @@ Route::get('/dashboard', function () {
 Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
 Route::get('/artists/{artist}', [ArtistController::class, 'show'])->name('artists.show');
 Route::post('/artists', [ArtistController::class, 'store'])->name('artists.store');
-
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+    Route::get('/profile/mycatalog', [ProfileController::class, 'mycatalog'])->name('mycatalog');
+
     Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
     Route::get('/songs/create', [SongController::class, 'create'])->name('songs.create');
     Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');

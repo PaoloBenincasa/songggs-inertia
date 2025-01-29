@@ -16,8 +16,8 @@ const ArtistForm = () => {
   };
 
   return (
-    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-      <h2 className="text-xl font-semibold leading-tight text-gray-800">
+    <div>
+      <h2>
         Inserisci i dati dell'artista
       </h2>
       <form onSubmit={handleSubmit}>

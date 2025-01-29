@@ -14,20 +14,20 @@ class SongController extends Controller
         $request->validate([
             'title' => 'required|string',
             'lyrics' => 'required|string',
-            'is_private' => 'required|boolean',
-            'cover' => 'required|image',
+            'is_private' => 'required|in:0,1',
+            'cover' => 'nullable|image',
         ]);
 
         $song = new Song();
         $song->title = $request->input('title');
         $song->lyrics = $request->input('lyrics');
-        $song->is_private = $request->input('is_private');
-        $song->cover = $request->file('cover')->store('covers');
+        $song->is_private = (bool) $request->input('is_private');
+        $song->cover = $request->hasFile('cover') ? $request->file('cover')->store('covers') : null;
         $song->artist_id = Auth::id();
 
         $song->save();
 
-        return Inertia::redirect(route('songs.index'));
+        return redirect()->route('songs.index');
     }
 
     public function index()
@@ -44,7 +44,7 @@ class SongController extends Controller
         $song = Song::find($id);
 
         if (!$song) {
-            return Inertia::redirect(route('songs.index'));
+            return redirect()->route('songs.index');
         }
 
         return Inertia::render('Songs/Edit', [
@@ -58,13 +58,13 @@ class SongController extends Controller
             'title' => 'required|string',
             'lyrics' => 'required|string',
             'is_private' => 'required|boolean',
-            'cover' => 'image',
+            'cover' => 'nullable|image',
         ]);
 
         $song = Song::find($id);
 
         if (!$song) {
-            return Inertia::redirect(route('songs.index'));
+            return redirect()->route('songs.index');
         }
 
         $song->title = $request->input('title');
@@ -77,7 +77,7 @@ class SongController extends Controller
 
         $song->save();
 
-        return Inertia::redirect(route('songs.index'));
+        return redirect()->route('songs.index');
     }
 
     public function destroy($id)
@@ -85,12 +85,12 @@ class SongController extends Controller
         $song = Song::find($id);
 
         if (!$song) {
-            return Inertia::redirect(route('songs.index'));
+            return redirect()->route('songs.index');
         }
 
         $song->delete();
 
-        return Inertia::redirect(route('songs.index'));
+        return redirect()->route('songs.index');
     }
 
     public function create()

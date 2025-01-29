@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Song;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+   
     public function edit(Request $request)
 {
     $artist = auth()->user()->artist;
@@ -29,9 +28,7 @@ class ProfileController extends Controller
     ]);
 }
 
-    /**
-     * Update the user's profile information.
-     */
+    
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -45,9 +42,7 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit');
     }
 
-    /**
-     * Delete the user's account.
-     */
+  
     public function destroy(Request $request): RedirectResponse
     {
         $request->validate([
@@ -65,4 +60,24 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function mycatalog()
+{
+    $songs = Song::where('artist_id', auth()->id())->get();
+
+    if ($songs->isEmpty()) {
+        return Inertia::render('Profile/Mycatalog', [
+            'songs' => [],
+            'message' => 'Non hai ancora caricato nessuna canzone.',
+        ]);
+    }
+
+    return Inertia::render('Profile/Mycatalog', [
+        'songs' => $songs,
+    ]);
+}
+
+    
+    
+    
 }

@@ -122,7 +122,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <button className='btn-green' disabled={processing}>Save</button>
 
                     <Transition
                         show={recentlySuccessful}
