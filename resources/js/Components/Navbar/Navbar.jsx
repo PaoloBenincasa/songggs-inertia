@@ -48,7 +48,7 @@ const Navbar = () => {
             <div className='w-25 text-end'>
                 {auth?.user ? (
                     <div className="dropdown">
-                        <a className="dropdown-toggle  txtGrey link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a className="dropdown-toggle txtGrey link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {auth.user.name}
                         </a>
                         <ul className="dropdown-menu">

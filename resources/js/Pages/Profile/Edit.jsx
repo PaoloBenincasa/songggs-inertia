@@ -7,9 +7,7 @@ import ArtistForm from './Partials/ArtistForm';
 import NavLink from '@/Components/NavLink';
 import Layout from '@/Layouts/Layout';
 
-
 export default function Edit({ mustVerifyEmail, status, auth, artist }) {
-    const artistId = artist.id;
     return (
         <Layout
             header={
@@ -23,32 +21,27 @@ export default function Edit({ mustVerifyEmail, status, auth, artist }) {
             <div>
                 <div>
                     <div>
-                        <ArtistForm
-                            
-                            user={auth.user}
-                        />
+                        <ArtistForm artist={artist ? artist : null} />
                     </div>
-                    {/* <a href="{{ route('artists.show', ['artist' => auth()->user()->artist->id]) }}">Vai al tuo profilo pubblico</a> */}
-                    <NavLink
-                        href={route('artists.show', [
-                            artistId // o qualsiasi altro valore che rappresenti l'ID dell'artista
-                        ])}
-                    >
-                        Vedi profilo artista
-                    </NavLink>
-                    <div >
+
+                    {artist && (
+                        <NavLink href={route('artists.show', [artist.id])}>
+                            Vedi profilo artista
+                        </NavLink>
+                    )}
+
+                    <div>
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
-                            
                         />
                     </div>
 
-                    <div >
+                    <div>
                         <UpdatePasswordForm />
                     </div>
 
-                    <div >
+                    <div>
                         <DeleteUserForm />
                     </div>
                 </div>
@@ -56,3 +49,4 @@ export default function Edit({ mustVerifyEmail, status, auth, artist }) {
         </Layout>
     );
 }
+

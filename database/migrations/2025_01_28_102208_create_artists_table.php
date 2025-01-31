@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor( model: \App\Models\User::class);
-            $table->string('stage_name');
-            $table->text('bio');
+            $table->foreignIdFor(\App\Models\User::class);
+            $table->string('stage_name')->nullable();
+            $table->text('bio')->nullable();
             $table->string('avatar');
             $table->timestamps();
         });
