@@ -36,8 +36,8 @@ export default function UpdateProfileInformation({
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
-                <div>
+            <form onSubmit={submit} className="mt-1">
+                <div className='d-flex flex-column w-50'>
                     <InputLabel htmlFor="name" value="Name" />
 
                     <TextInput
@@ -53,7 +53,7 @@ export default function UpdateProfileInformation({
                     <InputError className="mt-2" message={errors.name} />
                 </div>
 
-                <div>
+                <div className='d-flex flex-column w-50'>
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
@@ -93,7 +93,7 @@ export default function UpdateProfileInformation({
                 )}
 
                 <div className="flex items-center gap-4">
-                    <button className='btn-green' disabled={processing}>Save</button>
+                    <button className='btn-green mt-2' disabled={processing}>Save</button>
 
                     <Transition
                         show={recentlySuccessful}

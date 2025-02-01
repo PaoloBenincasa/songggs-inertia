@@ -17,35 +17,37 @@ export default function Edit({ mustVerifyEmail, status, auth, artist }) {
             }
         >
             <Head title="Profile" />
+            <div className='d-flex h-100 justify-content-center align-items-center bg-primary'>
 
-            <div>
-                <div>
-                    <div>
-                        <ArtistForm artist={artist ? artist : null} />
-                    </div>
+                <div className='h-100 bg-success d-flex flex-column justify-content-center align-items-center'>
+                    
+                        <div className='w-50'>
+                            <ArtistForm artist={artist ? artist : null} />
+                        </div>
 
-                    {artist && (
-                        <NavLink href={route('artists.show', [artist.id])}>
-                            Vedi profilo artista
-                        </NavLink>
-                    )}
+                        {artist && (
+                            <NavLink href={route('artists.show', [artist.id])}>
+                                Vedi profilo artista
+                            </NavLink>
+                        )}
 
-                    <div>
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                        />
-                    </div>
+                        <div className='w-50 mt-3'> 
+                            <UpdateProfileInformationForm
+                                mustVerifyEmail={mustVerifyEmail}
+                                status={status}
+                            />
+                        </div>
 
-                    <div>
-                        <UpdatePasswordForm />
-                    </div>
+                        <div className='w-50 mt-3'>
+                            <UpdatePasswordForm />
+                        </div>
 
-                    <div>
-                        <DeleteUserForm />
+                        <div className='w-50 mt-3'>
+                            <DeleteUserForm />
+                        </div>
                     </div>
                 </div>
-            </div>
+            
         </Layout>
     );
 }

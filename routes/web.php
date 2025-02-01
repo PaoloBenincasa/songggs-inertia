@@ -31,11 +31,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/mycatalog', [ProfileController::class, 'mycatalog'])->name('mycatalog');
-    Route::put('/artists/{artist}', [ArtistController::class, 'update'])->name('artists.update');    Route::get('/artists/{artist}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
-    Route::get('/artists/{id}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
+    Route::put('/artists/{artist}', [ArtistController::class, 'update'])->name('artists.update');    
+    Route::get('/artists/{artist}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
+    // Route::get('/artists/{id}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
     Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
     Route::get('/songs/create', [SongController::class, 'create'])->name('songs.create');
-    Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');
+    Route::get('/songs/{song}', [SongController::class, 'show'])->name('songs.show');
+    // Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');
     Route::get('/songs/{id}/edit', [SongController::class, 'edit'])->name('songs.edit');
     Route::patch('/songs/{id}', [SongController::class, 'update'])->name('songs.update');
     Route::delete('/songs/{id}', [SongController::class, 'destroy'])->name('songs.destroy');

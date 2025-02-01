@@ -57,8 +57,8 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </p>
             </header>
 
-            <form onSubmit={updatePassword} className="mt-6 space-y-6">
-                <div>
+            <form onSubmit={updatePassword} className="mt-2">
+                <div className='d-flex flex-column w-50'>
                     <InputLabel
                         htmlFor="current_password"
                         value="Current Password"
@@ -82,7 +82,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                     />
                 </div>
 
-                <div>
+                <div className='d-flex flex-column w-50'>
                     <InputLabel htmlFor="password" value="New Password" />
 
                     <TextInput
@@ -98,7 +98,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div>
+                <div className='d-flex flex-column w-50'>
                     <InputLabel
                         htmlFor="password_confirmation"
                         value="Confirm Password"
@@ -122,7 +122,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <button className='btn-green' disabled={processing}>Save</button>
+                    <button className='btn-green mt-2' disabled={processing}>Save</button>
 
                     <Transition
                         show={recentlySuccessful}

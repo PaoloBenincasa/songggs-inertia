@@ -72,6 +72,96 @@
 
 // export default Create;
 
+// import Layout from '@/Layouts/Layout';
+// import { useForm } from '@inertiajs/react';
+
+// const Create = () => {
+//   const { data, setData, post, processing, errors } = useForm({
+//     title: '',
+//     lyrics: '',
+//     is_private: 0,
+//     cover: null,
+//     spotifyID: ''
+//   });
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     post(route('songs.store'));
+//   };
+
+//   return (
+//     <Layout>
+
+//       <div className="container mt-5 pb-5 d-flex justify-content-center align-items-center ">
+//         <form onSubmit={handleSubmit}>
+//           <h1>Create a New Song</h1>
+//           <div className="mb-3">
+//             <label className="form-label">Title</label>
+//             <input
+//               type="text"
+//               className="form-control"
+//               value={data.title}
+//               onChange={(e) => setData('title', e.target.value)}
+//             />
+//             {errors.title && <div className="text-danger">{errors.title}</div>}
+//           </div>
+
+//           <div className="mb-3">
+//             <label className="form-label">Lyrics</label>
+//             <textarea
+//               className="form-control"
+//               rows="15"
+//               value={data.lyrics}
+//               onChange={(e) => setData('lyrics', e.target.value)}
+//             ></textarea>
+//             {errors.lyrics && <div className="text-danger">{errors.lyrics}</div>}
+//           </div>
+
+//           <div className="mb-3">
+//             <label className="form-label">Privacy</label>
+//             <select
+//               className="form-select"
+//               value={data.is_private}
+//               onChange={(e) => setData('is_private', e.target.value)}
+//             >
+//               <option value={0}>Public</option>
+//               <option value={1}>Private</option>
+//             </select>
+//             {errors.is_private && <div className="text-danger">{errors.is_private}</div>}
+//           </div>
+
+//           <div className='mb-3'>
+//             <label className='form-label'>Spotify link</label>
+//             <input
+//               type="url"
+//               className='form-control'
+//               value={data.spotifylink}
+//               onChange={(e) => setData('spotifylink', e.target.value)}
+//               placeholder='open.spotify.com/track/...'
+//             />
+//           </div>
+
+//           <div className="mb-3">
+//             <label className="form-label">Cover</label>
+//             <input
+//               type="file"
+//               className="form-control"
+//               onChange={(e) => setData('cover', e.target.files[0])}
+//             />
+//             {errors.cover && <div className="text-danger">{errors.cover}</div>}
+//           </div>
+
+//           <button type="submit" className="btn btn-green" disabled={processing}>
+//             {processing ? 'Saving...' : 'Save Song'}
+//           </button>
+//         </form>
+//       </div>
+//     </Layout>
+//   );
+// };
+
+// export default Create;
+
 import Layout from '@/Layouts/Layout';
 import { useForm } from '@inertiajs/react';
 
@@ -81,6 +171,7 @@ const Create = () => {
     lyrics: '',
     is_private: 0,
     cover: null,
+    spotifylink: '',
   });
 
   const handleSubmit = (e) => {
@@ -90,10 +181,10 @@ const Create = () => {
 
   return (
     <Layout>
-
-      <div className="container mt-5 ">
-        <h2>Create a New Song</h2>
+      <div className="container mt-5 pb-5 d-flex justify-content-center align-items-center ">
         <form onSubmit={handleSubmit}>
+          <h1>Create a New Song</h1>
+          
           <div className="mb-3">
             <label className="form-label">Title</label>
             <input
@@ -109,7 +200,7 @@ const Create = () => {
             <label className="form-label">Lyrics</label>
             <textarea
               className="form-control"
-              rows="5"
+              rows="15"
               value={data.lyrics}
               onChange={(e) => setData('lyrics', e.target.value)}
             ></textarea>
@@ -130,6 +221,18 @@ const Create = () => {
           </div>
 
           <div className="mb-3">
+            <label className="form-label">Spotify Link</label>
+            <input
+              type="url"
+              className="form-control"
+              value={data.spotifylink}
+              onChange={(e) => setData('spotifylink', e.target.value)}
+              placeholder="open.spotify.com/track/..."
+            />
+            {errors.spotifylink && <div className="text-danger">{errors.spotifylink}</div>}
+          </div>
+
+          <div className="mb-3">
             <label className="form-label">Cover</label>
             <input
               type="file"
@@ -139,7 +242,7 @@ const Create = () => {
             {errors.cover && <div className="text-danger">{errors.cover}</div>}
           </div>
 
-          <button type="submit" className="btn btn-primary" disabled={processing}>
+          <button type="submit" className="btn btn-green" disabled={processing}>
             {processing ? 'Saving...' : 'Save Song'}
           </button>
         </form>
@@ -149,3 +252,4 @@ const Create = () => {
 };
 
 export default Create;
+

@@ -11,8 +11,9 @@ class Song extends Model
         'title',
         'lyrics',
         'artist_id',
-        'is_private', // aggiungiamo la proprietà is_private
-        'cover', // aggiungiamo la proprietà cover
+        'is_private', 
+        'cover', 
+        'spotifylink'
     ];
 
     public function artist()

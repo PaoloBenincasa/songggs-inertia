@@ -16,6 +16,7 @@ class SongController extends Controller
             'lyrics' => 'required|string',
             'is_private' => 'required|in:0,1',
             'cover' => 'nullable|image',
+            'spotifylink' => 'nullable|string',
         ]);
 
         $song = new Song();
@@ -24,11 +25,13 @@ class SongController extends Controller
         $song->is_private = (bool) $request->input('is_private');
         $song->cover = $request->hasFile('cover') ? $request->file('cover')->store('covers') : null;
         $song->artist_id = Auth::id();
-
+        $song->spotifylink = $request->input('spotifylink');
         $song->save();
 
         return redirect()->route('songs.index');
     }
+ 
+
 
     public function index()
     {
@@ -96,5 +99,18 @@ class SongController extends Controller
     public function create()
     {
         return Inertia::render('Songs/Create');
+    }
+
+    public function show($id)
+    {
+        $song = Song::find($id);
+
+        // if (!$song) {
+        //     return redirect()->route('songs.index');
+        // }
+
+        return Inertia::render('Songs/Show', [
+            'song' => $song,
+        ]);
     }
 }

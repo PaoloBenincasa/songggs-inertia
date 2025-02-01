@@ -48,8 +48,8 @@ const ArtistForm = ({ artist }) => {
             <h2>
                 {artist ? 'Modifica artista' : 'Inserisci i dati dell\'artista'}
             </h2>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form onSubmit={handleSubmit} className='w-50'>
+                <div className='d-flex flex-column'>
                     <label htmlFor="stage_name">Nome d'arte</label>
                     <input
                         type="text"
@@ -60,6 +60,17 @@ const ArtistForm = ({ artist }) => {
                         required
                     />
                     {errors.stage_name && <span>{errors.stage_name}</span>}
+                </div>
+                <div className='d-flex flex-column'>
+                    <label htmlFor="bio">Biografia</label>
+                    <textarea
+                        id="bio"
+                        name="bio"
+                        value={data.bio}
+                        onChange={(e) => setData('bio', e.target.value)}
+                        required
+                    />
+                    {errors.bio && <span>{errors.bio}</span>}
                 </div>
                 <div>
                     <label htmlFor="avatar">Avatar</label>
@@ -73,18 +84,7 @@ const ArtistForm = ({ artist }) => {
                     />
                     {errors.avatar && <span>{errors.avatar}</span>}
                 </div>
-                <div>
-                    <label htmlFor="bio">Biografia</label>
-                    <textarea
-                        id="bio"
-                        name="bio"
-                        value={data.bio}
-                        onChange={(e) => setData('bio', e.target.value)}
-                        required
-                    />
-                    {errors.bio && <span>{errors.bio}</span>}
-                </div>
-                <button type="submit" className="btn btn-success" disabled={processing}>
+                <button type="submit" className="btn btn-success mt-2" disabled={processing}>
                     {processing ? 'Salvataggio in corso...' : 'Salva'}
                 </button>
             </form>
