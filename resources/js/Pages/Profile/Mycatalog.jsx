@@ -1,32 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePage } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout';
+import { Link } from '@inertiajs/react';
 
 const MyCatalog = () => {
   const { songs, message } = usePage().props;
+  const [songsList, setSongsList] = useState([]);
+
+  useEffect(() => {
+    console.log('Songs:', songs);
+    setSongsList(songs);
+  }, [songs]);
 
   return (
     <Layout>
       <h1>Le tue Canzoni</h1>
       {message && <p>{message}</p>}
-      {songs && songs.length > 0 ? (
+      {songsList && songsList.length > 0 ? (
         <ul>
-          {songs.map((song) => (
+          {songsList.map((song) => (
             <li key={song.id}>
               <h2>{song.title}</h2>
-              <p>{song.lyrics}</p>
-              {song.cover && (
-                <img
-                  src={`/storage/${song.cover}`}
-                  alt={song.title}
-                  style={{ maxWidth: '200px', borderRadius: '8px' }}
-                />
-              )}
+              <Link href={route("songs.show", { id: song.id })}>
+                view
+              </Link>
             </li>
           ))}
         </ul>
       ) : (
-        <p>Non hai ancora caricato nessuna canzone.</p>
+        <p>Nessuna canzone trovata</p>
       )}
     </Layout>
   );

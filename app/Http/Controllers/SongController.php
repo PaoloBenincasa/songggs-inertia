@@ -12,21 +12,38 @@ class SongController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string',
+            'title' => 'required|string|max:255',
             'lyrics' => 'required|string',
             'is_private' => 'required|in:0,1',
-            'cover' => 'nullable|image',
-            'spotifylink' => 'nullable|string',
+            'cover' => 'required|image',
+            'spotifylink' => 'nullable|url',
         ]);
-
-        $song = new Song();
-        $song->title = $request->input('title');
-        $song->lyrics = $request->input('lyrics');
-        $song->is_private = (bool) $request->input('is_private');
-        $song->cover = $request->hasFile('cover') ? $request->file('cover')->store('covers') : null;
-        $song->artist_id = Auth::id();
-        $song->spotifylink = $request->input('spotifylink');
-        $song->save();
+    
+        // Estrarre l'ID della traccia da Spotify URL (se presente)
+        $spotifyId = null;
+        if ($request->filled('spotifylink')) {
+            preg_match('/track\/([a-zA-Z0-9]+)/', $request->spotifylink, $matches);
+            $spotifyId = $matches[1] ?? null;
+    
+            if (!$spotifyId) {
+                return back()->withErrors(['spotifylink' => 'URL Spotify non valido.']);
+            }
+        }
+    
+        // Ottenere l'artista dell'utente autenticato
+        $artist = auth()->user()->artist;
+        if (!$artist) {
+            return back()->withErrors(['artist' => 'Devi avere un artista associato per aggiungere una canzone.']);
+        }
+    
+        // Creare e salvare la canzone
+        $song = $artist->songs()->create([
+            'title' => $request->title,
+            'lyrics' => $request->lyrics,
+            'is_private' => (bool) $request->is_private,
+            'cover' => $request->hasFile('cover') ? $request->file('cover')->store('covers') : null,
+            'spotifylink' => $spotifyId,
+        ]);
 
         return redirect()->route('songs.index');
     }

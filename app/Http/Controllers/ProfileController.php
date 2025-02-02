@@ -62,20 +62,23 @@ class ProfileController extends Controller
     }
 
     public function mycatalog()
-{
-    $songs = Song::where('artist_id', auth()->id())->get();
-
-    if ($songs->isEmpty()) {
+    {
+        $user = auth()->user();
+        
+        if (!$user->artist) {
+            return Inertia::render('Profile/Mycatalog', [
+                'songs' => [],
+                'message' => 'Non hai ancora caricato nessuna canzone.',
+            ]);
+        }
+    
+        $songs = Song::where('artist_id', $user->artist->id)->get();
+    
         return Inertia::render('Profile/Mycatalog', [
-            'songs' => [],
-            'message' => 'Non hai ancora caricato nessuna canzone.',
+            'songs' => $songs,
         ]);
     }
-
-    return Inertia::render('Profile/Mycatalog', [
-        'songs' => $songs,
-    ]);
-}
+    
 
     
     
