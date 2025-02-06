@@ -10,6 +10,7 @@ export default function ArtistCard({artist}) {
             <img src={`/storage/${artist.avatar}`} alt={artist.stage_name} className='cardPic mt-5' />
             <h5 className='mt-2 cardName'>{artist.stage_name}</h5>
             <p>{artist.bio}</p>
+            
             {/* <img src={artist.avatar} alt={artist.stage_name} /> */}
 
         </div>

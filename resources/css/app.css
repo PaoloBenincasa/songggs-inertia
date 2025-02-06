@@ -17,7 +17,8 @@
   /* --newgreen: #159678; */
   --newgreen: #00a591;
 
-  --darkred: rgb(109, 52, 52);
+  /* --contrast: #ff6600; */
+  --contrast: #b96e05;
 }
 
 body {
@@ -39,7 +40,7 @@ body {
 
 .hero-right {
   height: 80%;
-  
+
 }
 
 .txtGrey {
@@ -47,7 +48,7 @@ body {
   /* text-decoration: none !important; */
 }
 
-.bg-newblack{
+.bg-newblack {
   background-color: var(--newblack);
 }
 
@@ -99,14 +100,14 @@ body {
   outline: none !important;
 }
 
-input{
-  outline: none !important; 
+input {
+  outline: none !important;
 
 }
 
 input:focus {
   border: 3px solid var(--newgreen) !important;
-  outline: none !important; 
+  outline: none !important;
 
 }
 
@@ -133,28 +134,41 @@ input:focus {
   margin-top: 78px;
 }
 
-.heightMinus{
+.heightMinus {
   height: calc(100vh - 78px);
 }
 
-.studio{
+.studio {
   z-index: 6;
   max-height: 100%;
   overflow-y: auto;
 }
 
-.song-link{
+.song-link {
   color: var(--newwhite);
   text-decoration: none;
   transition: 0.3s;
 }
 
-.song-link:hover{
+.song-link:hover {
   color: var(--newgreen);
-  /* text-decoration: underline var(--newgreen); */
 }
 
-.artistsWrapper{
+.song-link:hover +.songPrivacyPub {
+  text-decoration: underline var(--newgreen) !important;
+}
+
+.song-link:hover +.songPrivacyPriv {
+  text-decoration: underline var(--contrast) !important;
+}
+
+.artistsWrapper {
   column-count: 3;
-  
+
+}
+
+.songCatalog {
+  width: 500px;
+  background-color: var(--blackest);
+  border-radius: 15px;
 }

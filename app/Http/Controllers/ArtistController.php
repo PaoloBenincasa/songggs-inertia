@@ -20,19 +20,7 @@ class ArtistController extends Controller
         return view('artists.create');
     }
 
-//     public function store(Request $request)
-// {
-//     $artist = new Artist();
-//     $artist->stage_name = $request->input('stage_name');
-//     // $artist->avatar = $request->file('avatar')->store('avatars');
-//     $artist->avatar = $request->file('avatar')->store('avatars', 'public');
 
-//     $artist->bio = $request->input('bio');
-//     $artist->user_id = auth()->id(); // impostare il valore di user_id
-//     $artist->save();
-
-//     return redirect()->route('artists.index');
-// }
 
 public function store(Request $request)
 {
@@ -62,26 +50,6 @@ public function store(Request $request)
 }
 
 
-// public function show(Artist $artist)
-// {
-//     $artist->load('songs');
-//     $user = auth()->user();
-        
-//     if (!$user->artist) {
-//         return Inertia::render('Profile/Mycatalog', [
-//             'songs' => [],
-//             'message' => 'Non hai ancora caricato nessuna canzone.',
-//         ]);
-//     }
-    
-//     $songs = Song::where('artist_id', $user->artist->id)->get();
-
-//     return Inertia::render('Artists/Show', [
-//         'artist' => $artist,
-//         'songs' => [],
-//         'message' => 'Non hai ancora caricato nessuna canzone.',
-//     ]);
-// }
 
 public function show(Artist $artist)
 {

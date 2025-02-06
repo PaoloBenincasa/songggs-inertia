@@ -25,8 +25,10 @@ class ProfileController extends Controller
             'user' => auth()->user(),
         ],
         'artist' => $artist,
+        
     ]);
 }
+
 
     
     public function update(ProfileUpdateRequest $request): RedirectResponse

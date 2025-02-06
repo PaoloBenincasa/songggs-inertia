@@ -43,7 +43,7 @@ class SongController extends Controller
             'spotifylink' => $spotifyId,
         ]);
 
-        return redirect()->route('songs.index');
+        return redirect()->route('artists.show', ['artist' => $artist->id]);
     }
  
 
@@ -131,11 +131,13 @@ class SongController extends Controller
         return redirect()->route('songs.index');
     }
 
-    public function create()
-    {
-        return Inertia::render('Songs/Create');
+    public function create() {
+        return Inertia::render('Songs/Create', [
+            'auth' => auth()->user(),
+            'artist' => auth()->user() ? auth()->user()->artist : null,
+        ]);
     }
-
+    
     public function show($id)
     {
         $song = Song::find($id);

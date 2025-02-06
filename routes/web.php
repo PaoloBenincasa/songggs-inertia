@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/artists/{artist}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
     // Route::get('/artists/{id}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
     Route::get('/songs/create', [SongController::class, 'create'])->name('songs.create');
+
     Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
     // Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');
     Route::get('/songs/{id}/edit', [SongController::class, 'edit'])->name('songs.edit');
