@@ -14,7 +14,9 @@
   --newblack: #252829;
   --blackest: #0c0e0e;
   --black: #151515;
-  --newgreen: #159678;
+  /* --newgreen: #159678; */
+  --newgreen: #00a591;
+
   --darkred: rgb(109, 52, 52);
 }
 
@@ -36,17 +38,17 @@ body {
 }
 
 .hero-right {
-  height: 70%;
-  background: url(./kid.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 45% 55%;
-  border-radius: 10px;
+  height: 80%;
+  
 }
 
 .txtGrey {
   color: grey;
   /* text-decoration: none !important; */
+}
+
+.bg-newblack{
+  background-color: var(--newblack);
 }
 
 .txtBlack {
@@ -129,4 +131,30 @@ input:focus {
 
 .childHeight {
   margin-top: 78px;
+}
+
+.heightMinus{
+  height: calc(100vh - 78px);
+}
+
+.studio{
+  z-index: 6;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.song-link{
+  color: var(--newwhite);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.song-link:hover{
+  color: var(--newgreen);
+  /* text-decoration: underline var(--newgreen); */
+}
+
+.artistsWrapper{
+  column-count: 3;
+  
 }

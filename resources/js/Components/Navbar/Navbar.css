@@ -7,14 +7,13 @@ nav {
     align-items: center;
     justify-content: center;
     background-color: var(--newblack);
-    /* background-color: transparent; */
     position: fixed; 
     top: 0;
     left: 0;
-    z-index: 1000; 
-    backdrop-filter: blur(10px); 
+    z-index: 5; 
+    backdrop-filter: blur(18px); 
     color: grey;
-    transition: background-color 0.3s ease-in-out;
+    /* transition: background-color 0.3s ease-in-out; */
 }
     
 
@@ -82,6 +81,6 @@ a:hover{
 } */
 
 .nav-center{
-    transform: translateX(2%);
+    transform: translateX(1.5%);
 }
 

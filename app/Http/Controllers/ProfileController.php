@@ -71,7 +71,7 @@ class ProfileController extends Controller
                 'message' => 'Non hai ancora caricato nessuna canzone.',
             ]);
         }
-    
+        
         $songs = Song::where('artist_id', $user->artist->id)->get();
     
         return Inertia::render('Profile/Mycatalog', [

@@ -1,19 +1,28 @@
 <?php
 
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
+use App\Models\Artist;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
+    $user = Auth::user();
+    $artist = $user ? $user->artist : null;
+    
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'artists' => Artist::all(),
+        'auth' => $user ? [
+            'user' => $user,
+            'artist' => $artist,  // Passa l'artista
+        ] : null
     ]);
 });
 
@@ -22,8 +31,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
-Route::get('/artists/{artist}', [ArtistController::class, 'show'])->name('artists.show');
 Route::post('/artists', [ArtistController::class, 'store'])->name('artists.store');
+Route::get('/artists/{artist}', [ArtistController::class, 'show'])->name('artists.show');
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
 
 Route::middleware('auth')->group(function () {
@@ -34,13 +43,15 @@ Route::middleware('auth')->group(function () {
     Route::put('/artists/{artist}', [ArtistController::class, 'update'])->name('artists.update');    
     Route::get('/artists/{artist}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
     // Route::get('/artists/{id}/edit', [ArtistController::class, 'edit'])->name('artists.edit');
-    Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
     Route::get('/songs/create', [SongController::class, 'create'])->name('songs.create');
-    Route::get('/songs/{song}', [SongController::class, 'show'])->name('songs.show');
+    Route::post('/songs', [SongController::class, 'store'])->name('songs.store');
     // Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');
     Route::get('/songs/{id}/edit', [SongController::class, 'edit'])->name('songs.edit');
     Route::patch('/songs/{id}', [SongController::class, 'update'])->name('songs.update');
     Route::delete('/songs/{id}', [SongController::class, 'destroy'])->name('songs.destroy');
+    Route::delete('/artists/{artist}', [ArtistController::class, 'destroy'])->name('artists.destroy');
+
 });
 
+Route::get('/songs/{song}', [SongController::class, 'show'])->name('songs.show');
 require __DIR__.'/auth.php';

@@ -1,8 +1,9 @@
 import { Head, Link } from '@inertiajs/react';
 import NavLink from '@/Components/NavLink';
 import Layout from '@/Layouts/Layout';
+import ArtistCard from '@/Components/ArtistCard/ArtistCard';
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome({ auth, laravelVersion, phpVersion, artists = [] }) {
     const handleImageError = () => {
         document
             .getElementById('screenshot-container')
@@ -18,7 +19,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         <Layout>
 
             <div className='vh-100 d-flex align-items-center justify-content-center'>
-                <section className="hero row w-100 text-end gap-5">
+                <header className="hero row w-100 text-end gap-5 pe-5 pb-5">
                     {/* Your Hero Content */}
                     <div className="col-5">
                         <h2>
@@ -57,11 +58,34 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                     </div>
                     <div className="col-3 hero-right">
-
+                        <figure>
+                            <img
+                                src="./kid.jpg"
+                                alt=""
+                                className='img-fluid'
+                                loading='lazy'
+                            />
+                        </figure>
                     </div>
 
-                </section>
+                </header>
             </div>
+            <section>
+                <div className='vh-100'>
+                    <h5 className='text-center txtGrey'>
+                        our artists
+                    </h5>
+                    <div className='artistsWrapper d-flex justify-content-around pt-3'>
+                        {artists.length > 0 ? (
+                            artists.map(artist => (
+                                <ArtistCard key={artist.id} artist={artist} />
+                            ))
+                        ) : (
+                            <p className="text-center">No artists found.</p>
+                        )}
+                    </div>
+                </div>
+            </section>
 
 
         </Layout>

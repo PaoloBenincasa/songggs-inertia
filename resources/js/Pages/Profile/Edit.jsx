@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
@@ -8,6 +8,15 @@ import NavLink from '@/Components/NavLink';
 import Layout from '@/Layouts/Layout';
 
 export default function Edit({ mustVerifyEmail, status, auth, artist }) {
+    const { delete: destroy, processing } = useForm();
+
+    const handleDeleteArtist = (e) => {
+        e.preventDefault();
+        if (confirm('Are you sure you want to delete your artist profile?')) {
+            destroy(route('artists.destroy', artist.id));
+        }
+    };
+
     return (
         <Layout
             header={
@@ -24,6 +33,18 @@ export default function Edit({ mustVerifyEmail, status, auth, artist }) {
                         <div className='w-50'>
                             <ArtistForm artist={artist ? artist : null} />
                         </div>
+
+                        {artist && (
+                        <div className="w-50 mt-3">
+                            <button 
+                                onClick={handleDeleteArtist} 
+                                disabled={processing}
+                                className="btn btn-danger"
+                            >
+                                {processing ? 'Deleting artist...' : 'Delete artist'}
+                            </button>
+                        </div>
+                    )}
 
                         {artist && (
                             <NavLink href={route('artists.show', [artist.id])}>

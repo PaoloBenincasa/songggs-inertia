@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 
-const ArtistForm = ({ artist }) => {
+export default function ArtistForm ({ artist }) {
     const [isSubmitted, setIsSubmitted] = useState(false); // Stato per gestire la visibilità del modulo
     const { data, setData, post, put, processing, errors } = useForm({
         id: artist ? artist.id : '',
@@ -48,7 +48,7 @@ const ArtistForm = ({ artist }) => {
             <h2>
                 {artist ? 'Modifica artista' : 'Inserisci i dati dell\'artista'}
             </h2>
-            <form onSubmit={handleSubmit} className='w-50'>
+            <form onSubmit={handleSubmit} className='w-50' encType='multipart/form-data'>
                 <div className='d-flex flex-column'>
                     <label htmlFor="stage_name">Nome d'arte</label>
                     <input
@@ -92,4 +92,3 @@ const ArtistForm = ({ artist }) => {
     );
 };
 
-export default ArtistForm;

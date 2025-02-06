@@ -15,7 +15,6 @@ class SongController extends Controller
             'title' => 'required|string|max:255',
             'lyrics' => 'required|string',
             'is_private' => 'required|in:0,1',
-            'cover' => 'required|image',
             'spotifylink' => 'nullable|url',
         ]);
     
@@ -41,7 +40,6 @@ class SongController extends Controller
             'title' => $request->title,
             'lyrics' => $request->lyrics,
             'is_private' => (bool) $request->is_private,
-            'cover' => $request->hasFile('cover') ? $request->file('cover')->store('covers') : null,
             'spotifylink' => $spotifyId,
         ]);
 
@@ -62,43 +60,63 @@ class SongController extends Controller
     public function edit($id)
     {
         $song = Song::find($id);
-
+    
         if (!$song) {
-            return redirect()->route('songs.index');
+            return redirect()->route('songs.index')->withErrors(['song' => 'Canzone non trovata.']);
         }
-
+    
+        // Assicurati che l'utente autenticato abbia un artista associato e che questo sia il proprietario della canzone
+        if (!auth()->check() || !auth()->user()->artist || $song->artist_id !== auth()->user()->artist->id) {
+            abort(403, 'Non sei autorizzato a modificare questa canzone.');
+        }
+    
         return Inertia::render('Songs/Edit', [
             'song' => $song,
         ]);
     }
+    
+    
 
     public function update(Request $request, $id)
     {
+        $song = Song::find($id);
+    
+        if (!$song) {
+            return redirect()->route('songs.index')->withErrors(['song' => 'Canzone non trovata.']);
+        }
+    
+        if (!auth()->check() || !auth()->user()->artist || $song->artist_id !== auth()->user()->artist->id) {
+            abort(403, 'Non sei autorizzato a modificare questa canzone.');
+        }
+    
         $request->validate([
-            'title' => 'required|string',
+            'title' => 'required|string|max:255',
             'lyrics' => 'required|string',
             'is_private' => 'required|boolean',
-            'cover' => 'nullable|image',
+            'spotifylink' => 'nullable|url',
         ]);
-
-        $song = Song::find($id);
-
-        if (!$song) {
-            return redirect()->route('songs.index');
+    
+        // Estrai lo Spotify ID se presente
+        $spotifyId = null;
+        if ($request->filled('spotifylink')) {
+            preg_match('/track\/([a-zA-Z0-9]+)/', $request->spotifylink, $matches);
+            $spotifyId = $matches[1] ?? null;
+            if (!$spotifyId) {
+                return back()->withErrors(['spotifylink' => 'URL Spotify non valido.']);
+            }
         }
 
-        $song->title = $request->input('title');
-        $song->lyrics = $request->input('lyrics');
-        $song->is_private = $request->input('is_private');
-
-        if ($request->hasFile('cover')) {
-            $song->cover = $request->file('cover')->store('covers');
-        }
-
-        $song->save();
-
+        
+        $song->update([
+            'title'       => $request->title,
+            'lyrics'      => $request->lyrics,
+            'is_private'  => (bool)$request->is_private,
+            'spotifylink' => $spotifyId,
+        ]);
+    
         return redirect()->route('songs.index');
     }
+    
 
     public function destroy($id)
     {
@@ -121,13 +139,14 @@ class SongController extends Controller
     public function show($id)
     {
         $song = Song::find($id);
-
+        $song->load('artist');
         // if (!$song) {
         //     return redirect()->route('songs.index');
         // }
 
         return Inertia::render('Songs/Show', [
             'song' => $song,
+            'artist' => $song->artist
         ]);
     }
 }

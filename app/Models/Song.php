@@ -12,7 +12,6 @@ class Song extends Model
         'lyrics',
         'artist_id',
         'is_private', 
-        'cover', 
         'spotifylink'
     ];
 

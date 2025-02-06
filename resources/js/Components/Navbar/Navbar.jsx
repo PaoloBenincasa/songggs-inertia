@@ -3,8 +3,8 @@ import { Inertia } from '@inertiajs/inertia';
 import './Navbar.css';
 
 
-const Navbar = () => {
-    const { auth } = usePage().props;
+export default function Navbar() {
+    const { auth, artist } = usePage().props;
 
     const handleLogout = () => {
         Inertia.post('/logout');
@@ -25,25 +25,36 @@ const Navbar = () => {
                 >
                     <li>
                         <i className="bi bi-pen-fill"></i>
-
                         write
                     </li>
                 </Link>
-                
+
                 <li>
                     <i className="bi bi-search"></i>
                     search
                 </li>
+                {/* <Link
+                    href={auth && auth.artist ? route('artists.show', auth.artist.id) : '#'}
+                    className={`link ${!(auth && auth.artist) ? 'disabled' : ''}`} // Aggiungi una classe "disabled" se non c'è l'artista
+                >
+                    <li>
+                        <i className="bi bi-file-music-fill"></i>
+                        catalog
+                    </li>
+                </Link> */}
                 <Link
-                    href={route('mycatalog', [
-                    ])}
-                    className='link'
+                    href={auth && auth.artist ? route('artists.show', auth.artist.id) : route('login')} // Se l'utente non è loggato, reindirizza al login
+                    className="link"
                 >
                     <li>
                         <i className="bi bi-file-music-fill"></i>
                         catalog
                     </li>
                 </Link>
+
+
+
+
             </ul>
             <div className='w-25 text-end'>
                 {auth?.user ? (
@@ -82,4 +93,3 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;

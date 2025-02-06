@@ -2,7 +2,7 @@ import React from 'react';
 import { usePage } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout';
 
-const Index = () => {
+export default function Index(){
   const { songs } = usePage().props;
   const publicSongs = songs?.filter(song => !song.is_private) || [];
 
@@ -32,4 +32,3 @@ const Index = () => {
   );
 };
 
-export default Index;
