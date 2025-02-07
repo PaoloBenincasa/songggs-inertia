@@ -15,22 +15,13 @@ export default function Show({ song, artist }) {
             <div className="vh-100 d-flex flex-column align-items-center justify-content-start pt-5">
                 <Head title={song.title} />
 
-                <h1 className="mb-2 undergreen">{song.title}</h1>
-                <p>by {artist.stage_name}</p>
-                {/* {spotifyEmbedUrl && (
-                        <iframe
-                            style={{ borderRadius: "12px" }}
-                            src={spotifyEmbedUrl}
-                            width="35%"
-                            height="152"
-                            frameBorder="0"
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                            loading="lazy"
-                            className="mb-4"
-                        ></iframe>
-                    
-                    )} */}
-                <div className="song-embed">
+                <h1 className="mb-2">{song.title}</h1>
+                <Link 
+                href={route("artists.show", artist.id)}
+                className="profile-link mb-2">
+                    {artist.stage_name}
+                </Link>
+                <div className="song-embed mb-2">
                     <SongEmbed spotifyId={song.spotifylink} />
                 </div>
                 <h6 className="txtGrey">Lyrics</h6>

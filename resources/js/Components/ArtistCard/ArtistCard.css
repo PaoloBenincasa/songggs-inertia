@@ -18,11 +18,13 @@
 
 .cardName{
     transition: 0.5s;
+    color: var(--newwhite);
+    text-decoration: underline var(--newgreen);
 }
 
 .cardBody:hover .cardName{
     color: var(--newgreen);
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .profile-link{
@@ -41,3 +43,4 @@
     border-radius: 50%;
     
 }
+
