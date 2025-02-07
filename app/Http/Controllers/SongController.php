@@ -145,8 +145,11 @@ class SongController extends Controller
         // if (!$song) {
         //     return redirect()->route('songs.index');
         // }
-
         return Inertia::render('Songs/Show', [
+            'auth' => [
+                            'user' => auth()->user(),
+                            'artist' => auth()->user()->artist, 
+                        ],
             'song' => $song,
             'artist' => $song->artist
         ]);

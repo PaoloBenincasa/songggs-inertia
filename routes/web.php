@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\Song;
 use Inertia\Inertia;
-use App\Models\Artist;
 
+use App\Models\Artist;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\SongController;
@@ -19,6 +20,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
         'artists' => Artist::all(),
+        'songs' => Song::with('artist')->get(),
         'auth' => $user ? [
             'user' => $user,
             'artist' => $artist,  // Passa l'artista

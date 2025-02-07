@@ -1,9 +1,8 @@
 import { Head, Link } from '@inertiajs/react';
-import NavLink from '@/Components/NavLink';
 import Layout from '@/Layouts/Layout';
 import ArtistCard from '@/Components/ArtistCard/ArtistCard';
 
-export default function Welcome({ auth, laravelVersion, phpVersion, artists = [] }) {
+export default function Welcome({ auth, laravelVersion, phpVersion, artists, songs = [] }) {
     const handleImageError = () => {
         document
             .getElementById('screenshot-container')
@@ -18,23 +17,24 @@ export default function Welcome({ auth, laravelVersion, phpVersion, artists = []
     return (
         <Layout>
 
+
             <div className='vh-100 d-flex align-items-center justify-content-center'>
                 <header className="hero row w-100 text-end gap-5 pe-5 pb-5">
                     {/* Your Hero Content */}
                     <div className="col-5">
                         <h2>
                             <span>
-                                <h1 className="mb-0 undergreen">
-                                    <i>
-                                        Songggs
-                                    </i>
-                                </h1>
+                                    <h1 className="mb-0 undergreen">
+                                        <i>
+                                            Songggs
+                                        </i>
+                                    </h1>
                             </span>
                             your personal musical diary
                         </h2>
                         <h5 className="txtGrey">
                             Ever struggled to keep track of the music you're working on?
-                            This is the place for you! Work on your lyrics, store your demos, collaborate with other artists.
+                            This is the place for you! bla bla Work on your lyrics, store your demos, collaborate with other artists.
                         </h5>
                         <Link href={route('songs.create', [])}>
                             <button className="btn-green mt-3">Start writing!</button>
@@ -82,6 +82,47 @@ export default function Welcome({ auth, laravelVersion, phpVersion, artists = []
                             ))
                         ) : (
                             <p className="text-center">No artists found.</p>
+                        )}
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div className='vh-100'>
+                    <h5 className='text-center txtGrey'>
+                        our songs
+                    </h5>
+                    <div className='container-fluid d-flex justify-content-center'>
+                        <div className='row justify-content-between w-50 txtGrey small'>
+                            <div className='col-5'>title</div>
+                            <div className='col-4'>artist</div>
+                            <div className='col-3'>last update</div>
+                        </div>
+                    </div>
+                    <div className='songsWrapper d-flex flex-column pt-3'>
+                        {songs.length > 0 ? (
+                            songs.map(song => (
+                                <div className='container-fluid d-flex justify-content-center'>
+                                    <div key={song.id} className='row justify-content-between w-50'>
+                                        <Link
+                                            href={route("songs.show", { id: song.id })}
+                                            className='song-link col-5'>
+                                            {song.title}
+                                        </Link>
+                                        <Link href={route("artists.show", { id: song.artist?.id })}
+                                            className='col-4 songlistArtist'>
+                                            {song.artist?.stage_name}
+
+                                        </Link>
+                                        <p className='col-3 songlistTime'>
+                                            {new Date(song.updated_at).toLocaleDateString('it-IT')}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            ))
+
+                        ) : (
+                            <p className="text-center">No songs found.</p>
                         )}
                     </div>
                 </div>

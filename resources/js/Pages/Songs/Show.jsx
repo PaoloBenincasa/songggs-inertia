@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Head, Link, usePage } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
+import SongEmbed from "@/Components/SongEmbed";
 
-export default function Show({ song, artist }){
+export default function Show({ song, artist }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { auth } = usePage().props; // auth.user dovrebbe essere l'utente autenticato
-    const spotifyEmbedUrl = song.spotifylink
-        ? `https://open.spotify.com/embed/track/${song.spotifylink}?utm_source=generator&theme=0`
-        : null;
+    // const spotifyEmbedUrl = song.spotifylink
+    //     ? `https://open.spotify.com/embed/track/${song.spotifylink}?utm_source=generator&theme=0`
+    //     : null;
 
     return (
         <Layout>
@@ -16,7 +17,22 @@ export default function Show({ song, artist }){
 
                 <h1 className="mb-2 undergreen">{song.title}</h1>
                 <p>by {artist.stage_name}</p>
-
+                {/* {spotifyEmbedUrl && (
+                        <iframe
+                            style={{ borderRadius: "12px" }}
+                            src={spotifyEmbedUrl}
+                            width="35%"
+                            height="152"
+                            frameBorder="0"
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"
+                            className="mb-4"
+                        ></iframe>
+                    
+                    )} */}
+                <div className="song-embed">
+                    <SongEmbed spotifyId={song.spotifylink} />
+                </div>
                 <h6 className="txtGrey">Lyrics</h6>
                 <div>
                     {song.lyrics.split("\n").map((line, index) => (
@@ -31,18 +47,6 @@ export default function Show({ song, artist }){
                     studio mode
                 </button>
 
-                {spotifyEmbedUrl && (
-                    <iframe
-                        style={{ borderRadius: "12px" }}
-                        src={spotifyEmbedUrl}
-                        width="35%"
-                        height="152"
-                        frameBorder="0"
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                        loading="lazy"
-                        className="mb-4"
-                    ></iframe>
-                )}
 
                 <div className="mt-4 mb-1">
                     <Link

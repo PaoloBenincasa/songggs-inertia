@@ -166,13 +166,39 @@ input:focus {
   text-decoration: underline var(--contrast) !important;
 }
 
+.song-link:hover ~ .songlistArtist,
+.song-link:hover ~ .songlistTime {
+  text-decoration: underline var(--newgreen) !important;
+}
+
+.songlistArtist{
+  text-decoration: none;
+  color: var(--newwhite);
+}
+
+.songlistArtist:hover{
+  text-decoration: none;
+  color: var(--newgreen);
+}
+
+
 .artistsWrapper {
   column-count: 3;
 
+}
+
+.songsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .songCatalog {
   width: 500px;
   background-color: var(--blackest);
   border-radius: 15px;
+}
+
+.song-embed{
+  width: 500px;
 }

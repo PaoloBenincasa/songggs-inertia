@@ -17,7 +17,6 @@
 }
 
 .cardName{
-    text-decoration: underline var(--newgreen);
     transition: 0.5s;
 }
 
@@ -26,7 +25,15 @@
     text-decoration: none;
 }
 
+.profile-link{
+    color: var(--newwhite);
+    text-decoration: underline var(--newgreen);
+}
 
+.profile-link:hover{
+    color: var(--newgreen);
+    text-decoration: none;
+}
 
 .cardPic{
     height: 200px;
