@@ -38,7 +38,9 @@ export default function Show({ artist, songs }) {
                 <h1 className='mt-2 undergreen'>{artist.stage_name}</h1>
                 <p>{artist.bio}</p>
                 {/* <img src={artist.avatar} alt={artist.stage_name} /> */}
-                <p>you have {publicSongs.length} public songs and {privateSongs.length} private songs</p>
+                <p className='mb-1'>{publicSongs.length} <span className='undergreen'>public</span> songs</p>
+                <p>{privateSongs.length} <span className='undercontrast'>private</span> songs</p>
+
                 {message && <p>{message}</p>}
                 {songsList && songsList.length > 0 ? (
                     <div className='p-3 mt-1 songCatalog'>

@@ -16,18 +16,17 @@ class ProfileController extends Controller
 {
    
     public function edit(Request $request)
-{
-    $artist = auth()->user()->artist;
-    return Inertia::render('Profile/Edit', [
-        'mustVerifyEmail' => false,
-        'status' => session('status'),
-        'auth' => [
-            'user' => auth()->user(),
-        ],
-        'artist' => $artist,
-        
-    ]);
-}
+    {
+        return Inertia::render('Profile/Edit', [
+            'mustVerifyEmail' => false,
+            'status' => session('status'),
+            'auth' => [
+                'user' => auth()->user(),
+                'artist' => auth()->user()->artist, 
+            ],
+        ]);
+    }
+    
 
 
     

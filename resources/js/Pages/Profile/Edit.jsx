@@ -1,4 +1,3 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
@@ -8,6 +7,9 @@ import NavLink from '@/Components/NavLink';
 import Layout from '@/Layouts/Layout';
 
 export default function Edit({ mustVerifyEmail, status, auth, artist }) {
+    console.log("auth:", auth);
+console.log("auth.artist:", auth?.artist);
+
     const { delete: destroy, processing } = useForm();
 
     const handleDeleteArtist = (e) => {

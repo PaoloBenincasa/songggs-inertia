@@ -14,7 +14,7 @@ export default function Show({ song, artist }){
             <div className="vh-100 d-flex flex-column align-items-center justify-content-start pt-5">
                 <Head title={song.title} />
 
-                <h1 className="text-2xl font-bold mb-2">{song.title}</h1>
+                <h1 className="mb-2 undergreen">{song.title}</h1>
                 <p>by {artist.stage_name}</p>
 
                 <h6 className="txtGrey">Lyrics</h6>

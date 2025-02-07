@@ -81,6 +81,10 @@ body {
   text-decoration: underline var(--newgreen);
 }
 
+.undercontrast{
+  text-decoration: underline var(--contrast);
+}
+
 #bio-button {
   cursor: pointer;
 }

@@ -90,14 +90,14 @@ export default function Edit({ song }){
                         {errors.is_private && <div className="text-danger">{errors.is_private}</div>}
                     </div>
 
-                    <button type="submit" className="btn btn-primary me-2" disabled={processing}>
+                    <button type="submit" className="btn btn-green me-2" disabled={processing}>
                         {processing ? 'Saving...' : 'Update'}
                     </button>
                     <button type="button" className="btn btn-danger" onClick={handleDelete}>
                         Delete song
                     </button>
                     <div>
-                        <Link href={route('mycatalog')} className="btn btn-secondary mt-3">Torna al tuo catalogo</Link>
+                        <Link href={route('mycatalog')} className="btn btn-secondary mt-3">back to your catalog</Link>
                     </div>
                 </form>
             </div>

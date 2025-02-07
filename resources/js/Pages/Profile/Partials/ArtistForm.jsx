@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 
+
 export default function ArtistForm ({ artist }) {
     const [isSubmitted, setIsSubmitted] = useState(false); // Stato per gestire la visibilità del modulo
     const { data, setData, post, put, processing, errors } = useForm({
