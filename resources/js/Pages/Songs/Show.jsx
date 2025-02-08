@@ -50,7 +50,7 @@ export default function Show({ song, artist }) {
 
                 <div className="mt-6 pb-3">
                     <Link
-                        href={route("mycatalog")}
+                        href={route("artists.show", artist.id)}
                         className="txtGrey link"
                     >
                         back to catalog

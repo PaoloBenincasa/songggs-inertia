@@ -14,7 +14,7 @@
   --newblack: #252829;
   --blackest: #0c0e0e;
   --black: #151515;
-  /* --newgreen: #159678; */
+  --green: #159678;
   --newgreen: #00a591;
 
   /* --contrast: #ff6600; */
@@ -32,15 +32,35 @@ body {
 }
 
 .hero {
+  
   height: 100vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: end;
   justify-content: center;
+  /* margin-top: 78px; */
+  /* padding-top: 75px; */
+  background: url("./kidhorizontal2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
 }
 
-.hero-right {
-  height: 80%;
+.hero-content{
+  background-color: transparent;
+  backdrop-filter: blur(8px);
+  width: 35%;
+  border-radius: 3%;
+}
 
+/* .kidPic{
+  height: 420px;
+  background-size: cover;
+} */
+
+.hero-right {
+  height: 85%;
+  border-radius: 3%;
 }
 
 .txtGrey {
@@ -66,15 +86,16 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   border: solid 2px var(--newgreen);
-  transition: 0.2s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 .btn-green:hover {
   background-color: var(--newwhite);
   color: var(--newgreen);
   padding: 5px 10px;
+  font-weight: bold;
   border-radius: 5px;
-  border: solid 2px var(--newgreen);
+  border: solid 2px var(--newwhite);
 }
 
 .undergreen {
@@ -201,4 +222,8 @@ input:focus {
 
 .song-embed{
   width: 500px;
+}
+
+.artistsContainer{
+  background-color: var(--blackest);
 }

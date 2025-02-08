@@ -60,7 +60,7 @@ export default function Navbar() {
             <div className='w-25 text-end'>
                 {auth?.user ? (
                     <div className="dropdown">
-                        <a className="dropdown-toggle txtGrey link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a className="dropdown-toggle link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {auth.user.name}
                         </a>
                         <ul className="dropdown-menu">
@@ -75,7 +75,7 @@ export default function Navbar() {
 
                 ) : (
                     <div className="dropdown">
-                        <a className="dropdown-toggle text-decoration-none txtGrey" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a className="dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             account
                         </a>
                         <ul className="dropdown-menu">

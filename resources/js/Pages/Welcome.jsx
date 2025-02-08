@@ -18,64 +18,56 @@ export default function Welcome({ auth, laravelVersion, phpVersion, artists, son
         <Layout>
 
 
-            <div className='vh-100 d-flex align-items-center justify-content-center'>
-                <header className="hero row w-100 text-end gap-5 pe-5 pb-5">
-                    {/* Your Hero Content */}
-                    <div className="col-5">
-                        <h2>
-                            <span>
-                                    <h1 className="mb-0 undergreen">
-                                        <i>
-                                            Songggs
-                                        </i>
-                                    </h1>
-                            </span>
-                            your personal musical diary
-                        </h2>
-                        <h5 className="txtGrey">
-                            Ever struggled to keep track of the music you're working on?
-                            This is the place for you! bla bla Work on your lyrics, store your demos, collaborate with other artists.
-                        </h5>
-                        <Link href={route('songs.create', [])}>
-                            <button className="btn-green mt-3">Start writing!</button>
-                        </Link>
-                        {/* <div>
+            {/* <div className='vh-75 d-flex align-items-center justify-content-center'> */}
+            <header className="hero  w-100 gap-5 pe-5 pb-5">
+                {/* Your Hero Content */}
+                <div className='hero-content p-3'>
+
+                    <h2>
+                        <span>
+                            <h1 className="mb-0 undergreen">
+                                <i>
+                                    Songggs
+                                </i>
+                            </h1>
+                        </span>
+                        your personal musical diary
+                    </h2>
+                    <h6>
+                        Ever struggled to keep track of the music you're working on?
+                        This is the place for you! Work on your lyrics, store your demos, collaborate with other artists.
+                    </h6>
+                    <Link href={route('songs.create', [])}>
+                        <button className="btn-green mt-3">Start writing!</button>
+                    </Link>
+                    {/* <div>
                             <small className="txtGrey">don't have an account yet?
-                                <Link href={route('register', [])}className="home-link">
-                                    <span className=" ms-1 ">join us!</span>
+                            <Link href={route('register', [])}className="home-link">
+                            <span className=" ms-1 ">join us!</span>
+                            </Link>
+                            </small>
+                            </div> */}
+                    {!auth?.user && (
+                        <div>
+                            <small className="txtGrey">don't have an account yet?
+                                <Link href={route('register', [])} className="home-link">
+                                    <span className="ms-1">join us!</span>
                                 </Link>
                             </small>
-                        </div> */}
-                        {!auth?.user && (
-                            <div>
-                                <small className="txtGrey">don't have an account yet?
-                                    <Link href={route('register', [])} className="home-link">
-                                        <span className="ms-1">join us!</span>
-                                    </Link>
-                                </small>
-                            </div>
-                        )}
+                        </div>
+                    )}
+                </div>
 
-                    </div>
-                    <div className="col-3 hero-right">
-                        <figure>
-                            <img
-                                src="./kid.jpg"
-                                alt=""
-                                className='img-fluid'
-                                loading='lazy'
-                            />
-                        </figure>
-                    </div>
 
-                </header>
-            </div>
-            <section>
-                <div className='vh-100'>
-                    <h5 className='text-center txtGrey'>
+
+            </header>
+            {/* </div> */}
+            <section className='artistsContainer'>
+                <div className='vh-75 pb-5'>
+                    <h5 className='text-center txtGrey pt-5 pb-4'>
                         our artists
                     </h5>
-                    <div className='artistsWrapper d-flex justify-content-around pt-3'>
+                    <div className='artistsWrapper d-flex justify-content-around pt-3 pb-5'>
                         {artists.length > 0 ? (
                             artists.map(artist => (
                                 <ArtistCard key={artist.id} artist={artist} />
@@ -88,10 +80,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion, artists, son
             </section>
             <section>
                 <div className='vh-100'>
-                    <h5 className='text-center txtGrey'>
+                    <h5 className='text-center txtGrey pt-5 pb-4'>
                         our songs
                     </h5>
-                    <div className='container-fluid d-flex justify-content-center'>
+                    <div className='container-fluid d-flex justify-content-center pt-3'>
                         <div className='row justify-content-between w-50 txtGrey small'>
                             <div className='col-5'>title</div>
                             <div className='col-4'>artist</div>

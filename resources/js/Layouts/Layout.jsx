@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
 
         <div className='max-vh-100'>
           <Navbar />
-          <main className='childHeight'>{children}</main>
+          <main >{children}</main>
         </div>
     
   );
