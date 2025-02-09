@@ -9,17 +9,38 @@ use Illuminate\Http\Request;
 
 class ArtistController extends Controller
 {
-    public function index()
-    {
-        $artists = Artist::all();
-        return Inertia::render('Artists/All', ['artists' => $artists]);
-    }
+    // public function index()
+    // {
+    //     $artists = Artist::all();
+    //     return Inertia::render('Artists/All', ['artists' => $artists]);
+    // }
 
     public function create()
     {
         return view('artists.create');
     }
 
+    // app/Http/Controllers/ArtistController.php
+
+public function index()
+{
+    // Recupera tutti gli artisti
+    $artists = Artist::all();
+
+    // Recupera le canzoni accessibili
+    $songs = Song::where(function($query) {
+        $query->where('is_private', 0)
+              ->orWhereHas('artist', function($q) {
+                  $q->where('user_id', auth()->id());
+              });
+    })->get();
+
+    // Restituisci la vista con gli artisti e le canzoni accessibili
+    return Inertia::render('Artists/All', [
+        'artists' => $artists,
+        'songs' => $songs,
+    ]);
+}
 
 
 public function store(Request $request)
@@ -51,16 +72,26 @@ public function store(Request $request)
 
 
 
+// app/Http/Controllers/ArtistController.php
+
 public function show(Artist $artist)
 {
     // Carica le canzoni associate all'artista
     $artist->load('songs');
 
+    // Filtra le canzoni accessibili
+    $accessibleSongs = $artist->songs->filter(function ($song) {
+        return !$song->is_private || $song->artist->user_id === auth()->id();
+    });
+
     return Inertia::render('Artists/Show', [
         'artist' => $artist,
-        'songs' => $artist->songs, // Ora passa effettivamente le canzoni
+        'songs' => $accessibleSongs, // Passa solo le canzoni accessibili
     ]);
 }
+
+
+
 
 
 public function edit(Artist $artist)

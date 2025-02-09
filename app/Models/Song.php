@@ -17,6 +17,11 @@ class Song extends Model
 
     public function artist()
     {
-        return $this->belongsTo(Artist::class);
+        return $this->belongsTo(Artist::class, 'artist_id');
     }
+
+    public function isAccessibleBy(User $user)
+{
+    return $this->is_private == 0 || $this->artist_id == $user->id;
+}
 }

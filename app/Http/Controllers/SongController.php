@@ -138,20 +138,46 @@ class SongController extends Controller
         ]);
     }
     
-    public function show($id)
-    {
-        $song = Song::find($id);
-        $song->load('artist');
-        // if (!$song) {
-        //     return redirect()->route('songs.index');
-        // }
-        return Inertia::render('Songs/Show', [
-            'auth' => [
-                            'user' => auth()->user(),
-                            'artist' => auth()->user()->artist, 
-                        ],
-            'song' => $song,
-            'artist' => $song->artist
-        ]);
+    // public function show($id)
+    // {
+    //     $song = Song::find($id);
+    //     $song->load('artist');
+    //     // if (!$song) {
+    //     //     return redirect()->route('songs.index');
+    //     // }
+    //     return Inertia::render('Songs/Show', [
+    //         'auth' => [
+    //             'user' => auth()->user(),
+    //             'artist' => auth()->user() ? auth()->user()->artist : null, 
+    //         ],
+    //         'song' => $song,
+    //         'artist' => $song && $song->artist ? $song->artist : null,
+    //     ]);
+        
+    // }
+    // app/Http/Controllers/SongController.php
+
+public function show($id)
+{
+    // Trova la canzone per ID o restituisci un errore 404 se non trovata
+    $song = Song::findOrFail($id);
+
+    // Carica il modello Artist associato
+    $song->load('artist');
+
+    // Controlla se la canzone è privata e se l'utente non è l'artista
+    if ($song->is_private && $song->artist->user_id !== auth()->id()) {
+        abort(403, 'Accesso non autorizzato.');
     }
+
+    // Restituisci la vista con i dati della canzone e dell'artista
+    return Inertia::render('Songs/Show', [
+        'auth' => [
+            'user' => auth()->user(),
+            'artist' => auth()->user() ? auth()->user()->artist : null, 
+        ],
+        'song' => $song,
+        'artist' => $song->artist,
+    ]);
+}
 }

@@ -10,21 +10,45 @@ use App\Http\Controllers\SongController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ProfileController;
 
+// Route::get('/', function () {
+//     $user = Auth::user();
+//     $artist = $user ? $user->artist : null;
+    
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//         'artists' => Artist::all(),
+//         'songs' => Song::with('artist')->get(),
+//         'auth' => $user ? [
+//             'user' => $user,
+//             'artist' => $artist,  // Passa l'artista
+//         ] : null
+//     ]);
+// });
+
 Route::get('/', function () {
     $user = Auth::user();
     $artist = $user ? $user->artist : null;
-    
+
+    // Eager loading delle canzoni con il loro artista e filtraggio
+    $songs = Song::with('artist')->where(function($query) use ($user) {
+        $query->where('is_private', 0)
+              ->orWhere('artist_id', $user ? $user->id : null);
+    })->get();
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
         'artists' => Artist::all(),
-        'songs' => Song::with('artist')->get(),
+        'songs' => $songs,  // Usa le canzoni filtrate
         'auth' => $user ? [
             'user' => $user,
-            'artist' => $artist,  // Passa l'artista
-        ] : null
+            'artist' => $artist,
+        ] : null,
     ]);
 });
 
