@@ -1,7 +1,8 @@
 import Layout from '@/Layouts/Layout';
 import { useForm } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 
-export default function Create(){
+export default function Create() {
   const { data, setData, post, processing, errors } = useForm({
     title: '',
     lyrics: '',
@@ -9,18 +10,22 @@ export default function Create(){
     cover: null,
     spotifylink: '',
   });
+  const { message, auth, artist} = usePage().props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     post(route('songs.store'));
   };
 
+  console.log("Auth:", auth);
+  console.log("Auth User:", auth?.user);
+  console.log("Auth User Artist:", auth?.user?.artist);
+
   return (
     <Layout>
-      <div className="container mt-5 pb-5 d-flex justify-content-center align-items-center ">
-        <form onSubmit={handleSubmit}>
+      <div className="container mt-5 pb-5 d-flex justify-content-center align-items-center childHeight ">
+        <form onSubmit={handleSubmit} className='mt-5'>
           <h1 className='text-center undergreen'>Create a New Song</h1>
-          
           <div className="mb-3">
             <label className="form-label txtGrey">Title</label>
             <input

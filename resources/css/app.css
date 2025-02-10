@@ -50,6 +50,7 @@ body {
   background-color: transparent;
   backdrop-filter: blur(8px);
   width: 35%;
+  margin-top: 85px;
   border-radius: 3%;
 }
 
@@ -159,6 +160,10 @@ input:focus {
   margin-top: 78px;
 }
 
+.nochild{
+  margin-top: 0px !important;
+}
+
 .heightMinus {
   height: calc(100vh - 78px);
 }
@@ -176,7 +181,7 @@ input:focus {
 }
 
 .song-link:hover {
-  color: var(--newgreen);
+  color: var(--newgreen) !important;
 }
 
 .song-link:hover +.songPrivacyPub {
@@ -199,9 +204,18 @@ input:focus {
 
 .songlistArtist:hover{
   text-decoration: none;
-  color: var(--newgreen);
+  color: var(--newgreen) !important;
 }
 
+.join{
+  color: var(--newwhite);
+  text-decoration: underline var(--newgreen);
+}
+
+.join:hover{
+  color: var(--newgreen) !important;
+  text-decoration: none !important;
+}
 
 .artistsWrapper {
   column-count: 3;

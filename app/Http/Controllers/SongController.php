@@ -18,7 +18,6 @@ class SongController extends Controller
             'spotifylink' => 'nullable|url',
         ]);
     
-        // Estrarre l'ID della traccia da Spotify URL (se presente)
         $spotifyId = null;
         if ($request->filled('spotifylink')) {
             preg_match('/track\/([a-zA-Z0-9]+)/', $request->spotifylink, $matches);
@@ -29,13 +28,11 @@ class SongController extends Controller
             }
         }
     
-        // Ottenere l'artista dell'utente autenticato
         $artist = auth()->user()->artist;
         if (!$artist) {
             return back()->withErrors(['artist' => 'Devi avere un artista associato per aggiungere una canzone.']);
         }
     
-        // Creare e salvare la canzone
         $song = $artist->songs()->create([
             'title' => $request->title,
             'lyrics' => $request->lyrics,
@@ -54,6 +51,8 @@ class SongController extends Controller
 
         return Inertia::render('Songs/Index', [
             'songs' => $songs,
+            'auth' => auth()->user(),
+
         ]);
     }
 
@@ -65,13 +64,14 @@ class SongController extends Controller
             return redirect()->route('songs.index')->withErrors(['song' => 'Canzone non trovata.']);
         }
     
-        // Assicurati che l'utente autenticato abbia un artista associato e che questo sia il proprietario della canzone
         if (!auth()->check() || !auth()->user()->artist || $song->artist_id !== auth()->user()->artist->id) {
             abort(403, 'Non sei autorizzato a modificare questa canzone.');
         }
     
         return Inertia::render('Songs/Edit', [
             'song' => $song,
+            'artist' => auth()->user() ? auth()->user()->artist : null,
+            'auth' => auth()->user(),
         ]);
     }
     
@@ -96,7 +96,6 @@ class SongController extends Controller
             'spotifylink' => 'nullable|url',
         ]);
     
-        // Estrai lo Spotify ID se presente
         $spotifyId = null;
         if ($request->filled('spotifylink')) {
             preg_match('/track\/([a-zA-Z0-9]+)/', $request->spotifylink, $matches);
@@ -131,46 +130,37 @@ class SongController extends Controller
         return redirect()->route('songs.index');
     }
 
+    // public function create() {
+    //     return Inertia::render('Songs/Create', [
+    //         'auth' => auth()->user(),
+    //         'artist' => auth()->user()?->artist,
+    //     ]);
+    // }
+
     public function create() {
+        $user = auth()->user();
+        $artist = $user ? $user->artist : null;
+    
         return Inertia::render('Songs/Create', [
-            'auth' => auth()->user(),
-            'artist' => auth()->user() ? auth()->user()->artist : null,
+            'auth' => [
+                'user' => $user,
+                'artist' => $artist,
+            ],
         ]);
     }
     
-    // public function show($id)
-    // {
-    //     $song = Song::find($id);
-    //     $song->load('artist');
-    //     // if (!$song) {
-    //     //     return redirect()->route('songs.index');
-    //     // }
-    //     return Inertia::render('Songs/Show', [
-    //         'auth' => [
-    //             'user' => auth()->user(),
-    //             'artist' => auth()->user() ? auth()->user()->artist : null, 
-    //         ],
-    //         'song' => $song,
-    //         'artist' => $song && $song->artist ? $song->artist : null,
-    //     ]);
-        
-    // }
-    // app/Http/Controllers/SongController.php
+
 
 public function show($id)
 {
-    // Trova la canzone per ID o restituisci un errore 404 se non trovata
+    
     $song = Song::findOrFail($id);
-
-    // Carica il modello Artist associato
     $song->load('artist');
 
-    // Controlla se la canzone è privata e se l'utente non è l'artista
     if ($song->is_private && $song->artist->user_id !== auth()->id()) {
         abort(403, 'Accesso non autorizzato.');
     }
 
-    // Restituisci la vista con i dati della canzone e dell'artista
     return Inertia::render('Songs/Show', [
         'auth' => [
             'user' => auth()->user(),

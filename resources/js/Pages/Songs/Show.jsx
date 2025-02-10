@@ -6,13 +6,10 @@ import SongEmbed from "@/Components/SongEmbed";
 export default function Show({ song, artist }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { auth } = usePage().props; // auth.user dovrebbe essere l'utente autenticato
-    // const spotifyEmbedUrl = song.spotifylink
-    //     ? `https://open.spotify.com/embed/track/${song.spotifylink}?utm_source=generator&theme=0`
-    //     : null;
-
+   
     return (
         <Layout>
-            <div className="vh-100 d-flex flex-column align-items-center justify-content-start pt-5">
+            <div className="d-flex flex-column align-items-center justify-content-start pt-5 childHeight">
                 <Head title={song.title} />
 
                 <h1 className="mb-2">{song.title}</h1>

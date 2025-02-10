@@ -1,17 +1,31 @@
 import { Link, usePage } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
+import { useEffect, useState } from 'react';
+
 import './Navbar.css';
 
 
 export default function Navbar() {
     const { auth, artist } = usePage().props;
+    const [isScrolled, setIsScrolled] = useState(false);
 
     const handleLogout = () => {
         Inertia.post('/logout');
     };
 
+    const handleScroll = () => {
+        setIsScrolled(window.scrollY > 20);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-        <nav className='d-flex align-items-center justify-content-between p-3'>
+        <nav className={`d-flex align-items-center justify-content-between p-3 ${isScrolled ? 'blur-effect' : ''}`}>
             <div className='w-25'>
                 <Link href="/" className='link'>
                     <div className='undergreen fst-italic'>Songggs</div>
@@ -33,17 +47,10 @@ export default function Navbar() {
                     <i className="bi bi-search"></i>
                     search
                 </li>
-                {/* <Link
-                    href={auth && auth.artist ? route('artists.show', auth.artist.id) : '#'}
-                    className={`link ${!(auth && auth.artist) ? 'disabled' : ''}`} // Aggiungi una classe "disabled" se non c'è l'artista
-                >
-                    <li>
-                        <i className="bi bi-file-music-fill"></i>
-                        catalog
-                    </li>
-                </Link> */}
+    
                 <Link
-                    href={auth && auth.artist ? route('artists.show', auth.artist.id) : route('login')} // Se l'utente non è loggato, reindirizza al login
+                    // href={auth && auth.artist ? route('artists.show', auth.artist.id) : route('login')}
+                    href={auth?.user?.artist ? route('artists.show', auth.user.artist.id) : route('login')}
                     className="link"
                 >
                     <li>
@@ -62,6 +69,7 @@ export default function Navbar() {
                     <div className="dropdown">
                         <a className="dropdown-toggle link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {auth.user.name}
+                            
                         </a>
                         <ul className="dropdown-menu">
                             <li>

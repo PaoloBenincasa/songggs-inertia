@@ -1,9 +1,12 @@
 import React from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout';
+import ArtistCard from '@/Components/ArtistCard/ArtistCard';
+import NavLink from '@/Components/NavLink';
 
-export default function Edit({ song }){
-    const { data, setData, patch, processing, errors, delete: destroy } = useForm({
+
+export default function Edit({ song, artist }) {
+    const { data, setData, patch, processing, auth, errors, delete: destroy } = useForm({
         title: song.title,
         lyrics: song.lyrics,
         spotifylink: song.spotifylink || '',
@@ -35,8 +38,8 @@ export default function Edit({ song }){
         <Layout>
             <Head title={`Modifica ${song.title}`} />
 
-            <div className="container mt-5 pb-5 d-flex justify-content-center align-items-center">
-                <form onSubmit={handleSubmit}>
+            <div className="container mt-5 pb-5 d-flex justify-content-center align-items-center childHeight">
+                <form onSubmit={handleSubmit} className='mt-5'>
                     <h1>Modifica Canzone</h1>
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">Titolo</label>
@@ -96,8 +99,14 @@ export default function Edit({ song }){
                     <button type="button" className="btn btn-danger" onClick={handleDelete}>
                         Delete song
                     </button>
-                    <div>
-                        <Link href={route('mycatalog')} className="btn btn-secondary mt-3">back to your catalog</Link>
+                    <div className='mt-1'>
+
+                        <Link
+                            href={route("artists.show", artist.id)}
+                            className=" link"
+                        >
+                            back to catalog
+                        </Link>
                     </div>
                 </form>
             </div>
