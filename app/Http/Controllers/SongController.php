@@ -11,13 +11,18 @@ class SongController extends Controller
 {
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'title' => 'required|string|max:255',
             'lyrics' => 'required|string',
             'is_private' => 'required|in:0,1',
             'spotifylink' => 'nullable|url',
+            'audio' => 'nullable|mimes:mp3,wav,ogg|max:10240', 
         ]);
     
+
+        $audioPath = $request->file('audio') ? $request->file('audio')->store('audio', 'public') : null;
+
         $spotifyId = null;
         if ($request->filled('spotifylink')) {
             preg_match('/track\/([a-zA-Z0-9]+)/', $request->spotifylink, $matches);
@@ -38,6 +43,7 @@ class SongController extends Controller
             'lyrics' => $request->lyrics,
             'is_private' => (bool) $request->is_private,
             'spotifylink' => $spotifyId,
+            'audio' => $audioPath
         ]);
 
         return redirect()->route('artists.show', ['artist' => $artist->id]);
@@ -59,7 +65,9 @@ class SongController extends Controller
     public function edit($id)
     {
         $song = Song::find($id);
-    
+        $user = auth()->user();
+
+
         if (!$song) {
             return redirect()->route('songs.index')->withErrors(['song' => 'Canzone non trovata.']);
         }
@@ -71,7 +79,10 @@ class SongController extends Controller
         return Inertia::render('Songs/Edit', [
             'song' => $song,
             'artist' => auth()->user() ? auth()->user()->artist : null,
-            'auth' => auth()->user(),
+            'auth' => $user ? [
+                'user' => $user,
+                'artist' => $user->artist, 
+            ] : null,
         ]);
     }
     
@@ -80,7 +91,8 @@ class SongController extends Controller
     public function update(Request $request, $id)
     {
         $song = Song::find($id);
-    
+        $user = auth()->user();
+
         if (!$song) {
             return redirect()->route('songs.index')->withErrors(['song' => 'Canzone non trovata.']);
         }
@@ -159,6 +171,10 @@ public function show($id)
 
     if ($song->is_private && $song->artist->user_id !== auth()->id()) {
         abort(403, 'Accesso non autorizzato.');
+    }
+
+    if ($song->audio) {
+        $song->audio_url = asset('storage/audio/' . $song->audio); // Using asset() here
     }
 
     return Inertia::render('Songs/Show', [

@@ -6,20 +6,34 @@ import SongEmbed from "@/Components/SongEmbed";
 export default function Show({ song, artist }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { auth } = usePage().props; // auth.user dovrebbe essere l'utente autenticato
-   
+
+    console.log(song.audio);  // Verifica il valore
+
     return (
         <Layout>
             <div className="d-flex flex-column align-items-center justify-content-start pt-5 childHeight">
                 <Head title={song.title} />
 
                 <h1 className="mb-2">{song.title}</h1>
-                <Link 
-                href={route("artists.show", artist.id)}
-                className="profile-link mb-2">
+                <Link
+                    href={route("artists.show", artist.id)}
+                    className="link mb-2">
                     {artist.stage_name}
                 </Link>
                 <div className="song-embed mb-2">
                     <SongEmbed spotifyId={song.spotifylink} />
+                </div>
+                <div className="mb-2 h-50">
+
+                    {song.audio_url && ( // Use song.audio_url here
+                        <audio controls>
+                            <source src={song.audio_url} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                        </audio>
+                    )}
+
+
+
                 </div>
                 <h6 className="txtGrey">Lyrics</h6>
                 <div>

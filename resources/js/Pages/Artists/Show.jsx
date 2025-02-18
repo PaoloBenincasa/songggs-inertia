@@ -19,14 +19,26 @@ export default function Show({ artist, songs }) {
                 <h1 className='mt-2 undergreen'>{artist.stage_name}</h1>
                 <p>{artist.bio}</p>
 
-                {auth?.user?.artist ? (
-                    <div>
-                        <p className='mb-1'>{songs.filter(song => song.is_private === 0).length} <span className='undergreen'>public</span> songs</p>
-                        <p>{songs.filter(song => song.is_private === 1).length} <span className='undercontrast'>private</span> songs</p>
+                {auth?.user?.id === artist.user_id ? (
+                    <div className='text-center'>
+                        <p className='mb-1'>
+                            {songs.filter(song => song.is_private === 0).length}
+                            <span className='undergreen'> public {songs.filter(song => song.is_private === 0).length === 1 ? 'song' : 'songs'}</span>
+                        </p>
+                        <p>
+                            {songs.filter(song => song.is_private === 1).length}
+                            <span className='undercontrast'> private {songs.filter(song => song.is_private === 1).length === 1 ? 'song' : 'songs'}</span>
+                        </p>
                     </div>
                 ) : (
-                    <p className='mb-1'>{songs.filter(song => song.is_private === 0).length} songs</p>
+                    <p className='mb-1'>
+                        {songs.filter(song => song.is_private === 0).length}
+                        {songs.filter(song => song.is_private === 0).length === 1 ? ' song' : ' songs'}
+                    </p>
                 )}
+
+
+
 
                 {message && <p>{message}</p>}
                 {songs.length > 0 ? (

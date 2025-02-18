@@ -20,7 +20,7 @@ console.log("auth.artist:", auth?.artist);
     };
 
     return (
-        <Layout
+        <Layout 
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
                     Profile
@@ -28,7 +28,7 @@ console.log("auth.artist:", auth?.artist);
             }
         >
             <Head title="Profile" />
-            <div className='d-flex h-100 justify-content-center align-items-center bg-primary'>
+            <div className='d-flex childHeight pt-5 justify-content-center align-items-center bg-primary'>
 
                 <div className='h-100 bg-success d-flex flex-column justify-content-center align-items-center'>
                     

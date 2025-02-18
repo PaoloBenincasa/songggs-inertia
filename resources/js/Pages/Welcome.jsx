@@ -63,30 +63,30 @@ export default function Welcome({ auth, laravelVersion, phpVersion, artists, son
                     <div className='vh-100'>
                         <h5 className='text-center txtGrey pt-5 pb-4'>our songs</h5>
                         <div className='container-fluid d-flex justify-content-center pt-3'>
-                            <div className='row justify-content-between w-50 txtGrey small'>
-                                <div className='col-5'>title</div>
-                                <div className='col-4'>artist</div>
-                                <div className='col-3'>last update</div>
+                            <div className='row justify-content-center txtGrey small w-100'>
+                                <div className='col-6 text-end'>title</div>
+                                <div className='col-6'>artist</div>
+                                {/* <div className='col-3'>last update</div> */}
                             </div>
                         </div>
                         <div className='songsWrapper d-flex flex-column pt-3'>
                             {accessibleSongs.length > 0 ? (
                                 accessibleSongs.map(song => (
                                     <div className='container-fluid d-flex justify-content-center' key={song.id}>
-                                        <div className='row justify-content-between w-50'>
+                                        <div className='row justify-content-center w-100'>
                                             <Link
                                                 href={route("songs.show", { id: song.id })}
-                                                className='song-link col-5'>
+                                                className='song-link col-6 text-end'>
                                                 {song.title}
                                             </Link>
                                             <Link
                                                 href={route("artists.show", { id: song.artist?.id })}
-                                                className='col-4 songlistArtist'>
+                                                className='col-6 songlistArtist'>
                                                 {song.artist?.stage_name || 'Unknown Artist'}
                                             </Link>
-                                            <p className='col-3 songlistTime'>
+                                            {/* <p className='col-3 songlistTime'>
                                                 {new Date(song.updated_at).toLocaleDateString('it-IT')}
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                 ))

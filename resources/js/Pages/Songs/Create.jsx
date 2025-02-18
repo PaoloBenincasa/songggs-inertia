@@ -12,14 +12,36 @@ export default function Create() {
   });
   const { message, auth, artist} = usePage().props;
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   post(route('songs.store'));
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    post(route('songs.store'));
-  };
+    console.log(data)
+    // Use Inertia's `post` with FormData
+    post(route('songs.store'), data, {
+        // Important: Set the Content-Type header
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+        onSuccess: () => {
+            // Optionally, handle success (e.g., reset the form)
+            setData({
+                title: '',
+                lyrics: '',
+                is_private: 0,
+                audio: null,
+                spotifylink: '',
+            });
+        },
+    });
+};
 
-  console.log("Auth:", auth);
-  console.log("Auth User:", auth?.user);
-  console.log("Auth User Artist:", auth?.user?.artist);
+  // console.log("Auth:", auth);
+  // console.log("Auth User:", auth?.user);
+  // console.log("Auth User Artist:", auth?.user?.artist);
 
   return (
     <Layout>
@@ -72,6 +94,28 @@ export default function Create() {
             />
             {errors.spotifylink && <div className="text-danger">{errors.spotifylink}</div>}
           </div>
+
+          {/* <div className="mb-3">
+            <label className="form-label txtGrey">MP3 file</label>
+            <input
+              type="file"
+              className="form-control"
+              accept="audio/mp3"
+              onChange={(e) => setData('audio', e.target.files[0])}
+            />
+            {errors.audio && <div className="text-danger">{errors.audio}</div>}
+          </div> */}
+
+          <div className="mb-3">
+                <label className="form-label txtGrey">MP3 file</label>
+                <input
+                    type="file"
+                    className="form-control"
+                    accept="audio/mpeg" // Corrected accept type
+                    onChange={(e) => setData('audio', e.target.files[0])}
+                />
+                {errors.audio && <div className="text-danger">{errors.audio}</div>}
+            </div>
 
           <button type="submit" className="btn btn-green" disabled={processing}>
             {processing ? 'Saving...' : 'Save Song'}

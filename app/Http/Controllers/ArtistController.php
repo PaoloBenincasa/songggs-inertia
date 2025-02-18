@@ -74,40 +74,44 @@ public function store(Request $request)
 
 // app/Http/Controllers/ArtistController.php
 
-// public function show(Artist $artist)
-// {
-//     // Carica le canzoni associate all'artista
-//     $artist->load('songs');
-
-//     // Filtra le canzoni accessibili
-//     $accessibleSongs = $artist->songs->filter(function ($song) {
-//         return !$song->is_private || $song->artist->user_id === auth()->id();
-//     });
-
-//     return Inertia::render('Artists/Show', [
-//         'artist' => $artist,
-//         'songs' => $accessibleSongs, // Passa solo le canzoni accessibili
-//     ]);
-// }
-
 public function show(Artist $artist)
 {
-    $user = auth()->user();
+    // Carica le canzoni associate all'artista
     $artist->load('songs');
-
-    $accessibleSongs = $artist->songs->filter(function ($song) use ($user) {
-        return !$song->is_private || $song->artist->user_id === $user->id;
+    $user = auth()->user();
+    // Filtra le canzoni accessibili
+    $accessibleSongs = $artist->songs->filter(function ($song) {
+        return !$song->is_private || $song->artist->user_id === auth()->id();
     });
 
     return Inertia::render('Artists/Show', [
         'artist' => $artist,
-        'songs' => $accessibleSongs,
+        'songs' => $accessibleSongs, // Passa solo le canzoni accessibili
         'auth' => $user ? [
             'user' => $user,
             'artist' => $user->artist, // Aggiunto per mantenere coerenza con Welcome.jsx
         ] : null,
     ]);
 }
+
+// public function show(Artist $artist)
+// {
+//     $user = auth()->user();
+//     $artist->load('songs');
+
+//     $accessibleSongs = $artist->songs->filter(function ($song) use ($user) {
+//         return !$song->is_private || $song->artist->user_id === $user->id;
+//     });
+
+//     return Inertia::render('Artists/Show', [
+//         'artist' => $artist,
+//         'songs' => $accessibleSongs,
+//         'auth' => $user ? [
+//             'user' => $user,
+//             'artist' => $user->artist, // Aggiunto per mantenere coerenza con Welcome.jsx
+//         ] : null,
+//     ]);
+// }
 
 
 

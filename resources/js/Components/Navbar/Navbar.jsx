@@ -8,6 +8,7 @@ import './Navbar.css';
 export default function Navbar() {
     const { auth, artist } = usePage().props;
     const [isScrolled, setIsScrolled] = useState(false);
+    const [furtherScroll, setFurtherScroll] = useState(false);
 
     const handleLogout = () => {
         Inertia.post('/logout');
@@ -15,6 +16,7 @@ export default function Navbar() {
 
     const handleScroll = () => {
         setIsScrolled(window.scrollY > 20);
+        setFurtherScroll(window.scrollY > 120);
     };
 
     useEffect(() => {
@@ -25,13 +27,23 @@ export default function Navbar() {
     }, []);
 
     return (
-        <nav className={`d-flex align-items-center justify-content-between p-3 ${isScrolled ? 'blur-effect' : ''}`}>
-            <div className='w-25'>
+        <nav className={`d-flex align-items-center justify-content-between p-3 ${isScrolled ? 'blur-effect' : ''} ${furtherScroll ? 'further-scroll' : ''}`}>
+            <div className='w-25 navLeft'>
                 <Link href="/" className='link'>
                     <div className='undergreen fst-italic'>Songggs</div>
                 </Link>
             </div>
             <ul className='d-flex align-items-center justify-content-around w-50 nav-center p-0 m-0'>
+                <Link
+                    href="/"
+                    className='link d-none'
+                >
+                    <li>
+                        <i className="bi bi-pen-fill"></i>
+                        home
+                    </li>
+                </Link>
+
                 <Link
                     href={route('songs.create', [
                     ])}
@@ -47,9 +59,8 @@ export default function Navbar() {
                     <i className="bi bi-search"></i>
                     search
                 </li>
-    
+
                 <Link
-                    // href={auth && auth.artist ? route('artists.show', auth.artist.id) : route('login')}
                     href={auth?.user?.artist ? route('artists.show', auth.user.artist.id) : route('login')}
                     className="link"
                 >
@@ -58,18 +69,14 @@ export default function Navbar() {
                         catalog
                     </li>
                 </Link>
-                
-
-
-
 
             </ul>
-            <div className='w-25 text-end'>
+            <div className='w-25 text-end navRight'>
                 {auth?.user ? (
                     <div className="dropdown">
                         <a className="dropdown-toggle link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {auth.user.name}
-                            
+
                         </a>
                         <ul className="dropdown-menu">
                             <li>

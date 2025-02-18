@@ -12,7 +12,8 @@ class Song extends Model
         'lyrics',
         'artist_id',
         'is_private', 
-        'spotifylink'
+        'spotifylink',
+        'audio'
     ];
 
     public function artist()

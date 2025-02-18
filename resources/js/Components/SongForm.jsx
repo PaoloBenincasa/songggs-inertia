@@ -7,6 +7,7 @@ const SongForm = () => {
         lyrics: '',
         is_private: false,
         cover: null,
+        audio: null,
     });
 
     const handleSubmit = (e) => {
@@ -23,7 +24,7 @@ const SongForm = () => {
             <h2 className="text-xl font-semibold leading-tight text-gray-800">
                 Inserisci i dati della canzone
             </h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div>
                     <label htmlFor="title">Titolo</label>
                     <input
