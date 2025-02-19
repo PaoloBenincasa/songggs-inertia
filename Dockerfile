@@ -18,6 +18,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Imposta la working directory
 WORKDIR /var/www
 
+RUN mkdir -p /var/www/database && touch /var/www/database/database.sqlite
+
+
 # Copia i file del progetto
 COPY . .
 
