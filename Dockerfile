@@ -23,7 +23,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # Installa Node.js, npm e Vite
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
-    && npm install \
-    && npm
+    && npm install
+
