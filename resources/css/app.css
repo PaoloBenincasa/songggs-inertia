@@ -40,7 +40,7 @@ body {
   justify-content: center;
   /* margin-top: 78px; */
   /* padding-top: 75px; */
-  background: url("./kidhorizontal2.jpg");
+  background: url("/kidhorizontal2.jpg");
 
   /* background: url("${import.meta.env.VITE_APP_URL}/kidhorizontal2.jpg"); */
   background-size: cover;
